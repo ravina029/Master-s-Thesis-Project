@@ -37,10 +37,6 @@ This work builds on foundational architectures such as:
 - Permutation-invariant embeddings (Balan et al.)
 - Low-dimensional invariant embeddings (Dym & Gortler)
 
-# Observations: 
-
-
-![Image Alt Text](https://github.com/ravina029/Masters-Project/blob/main/Screenshot%202024-05-11%20at%2012.13.26.jpeg)
 
 
 ### Key gap addressed:
@@ -136,6 +132,9 @@ Two experiments were conducted:
   - >99% for small D
   - 100% for D > 20
 - Stability–accuracy tradeoff observed
+
+![Image Alt Text](https://github.com/ravina029/Masters-Project/blob/main/Screenshot%202024-05-11%20at%2012.13.26.jpeg)
+
 
 ---
 
