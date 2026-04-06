@@ -1,68 +1,46 @@
+# 🎓 Master's Thesis  
+## Stability and Accuracy of Permutation-Invariant Embedding Schemes
 
+---
 
-# Master's Thesis: Stability and Accuracy of Permutation-Invariant Embedding Schemes
-
-hhhh
 ## 📌 Overview
 
-This thesis investigates the **theoretical foundations of permutation-invariant representations**, a critical component in modern machine learning architectures dealing with unordered data such as sets, point clouds, and graphs.
+This thesis investigates the **theoretical foundations of permutation-invariant representations**, which are essential for modeling unordered data such as sets, point clouds, and graphs.
 
-The work focuses on two key properties:
+The work focuses on designing embedding schemes that are both:
+- **Expressive (injective)**  
+- **Stable (bi-Lipschitz continuous)**  
 
-- **Injectivity (Separation):** Ensuring distinct inputs map to distinct representations  
-- **Stability (Bi-Lipschitz continuity):** Ensuring robustness to small input perturbations  
-
-The goal is to design embedding schemes that are both **expressive and stable**, while minimizing computational complexity.
+while maintaining **low computational complexity**.
 
 ---
 
 ## 🎯 Problem Statement
 
-Many real-world machine learning tasks involve **unordered data** (e.g., sets, point clouds, graphs). Standard neural architectures fail to respect permutation invariance.
+Key challenges in permutation-invariant learning:
 
-Key challenges:
-
-- Designing **permutation-invariant embeddings**
-- Ensuring **injectivity (no information loss)**
-- Achieving **stability under perturbations**
-- Reducing **embedding dimension (computational cost)**
-
----
-
-## 📚 Research Context
-
-This work builds on foundational architectures such as:
-
-- DeepSets (Zaheer et al., 2017)
-- Permutation-invariant embeddings (Balan et al.)
-- Low-dimensional invariant embeddings (Dym & Gortler)
-
-
-
-### Key gap addressed:
-- Existing methods either:
-  - Lack **stability guarantees**, or  
-  - Require **very high embedding dimensions**  
+- Designing embeddings that preserve **all input information (injectivity)**  
+- Ensuring **robustness to perturbations (stability)**  
+- Reducing **embedding dimensionality** for practical deployment  
 
 ---
 
 ## 💡 Core Contributions
 
-### 1. ❌ Limitation of Algebraic Embeddings
-- Proved that **power-sum based embeddings are NOT Bi-Lipschitz**
-- Extended result:
-  - Any embedding based on **smooth or piecewise smooth summation functions fails stability**
+### 1. ❌ Fundamental Limitation of Sum-Based Embeddings
+- Proved that **power-sum (DeepSets-style) embeddings are not bi-Lipschitz**  
+- Extended result:  
+  - Any embedding based on **smooth or piecewise smooth aggregation fails stability**
 
-👉 Implication:  
-Common architectures like DeepSets (sum aggregation) have **fundamental stability limitations**
+👉 **Implication:** Widely used architectures have inherent stability limitations
 
 ---
 
-### 2. 📉 General Negative Result
+### 2. 📉 General Impossibility Result
 - Proved that:
-  > Any permutation-invariant function that is differentiable at certain structured points is NOT Bi-Lipschitz
+  > Any permutation-invariant function differentiable at structured points is **not bi-Lipschitz**
 
-👉 This is a **broad impossibility result**, not just a specific case
+👉 Establishes a **broad theoretical limitation**, not restricted to specific models
 
 ---
 
@@ -73,14 +51,13 @@ Common architectures like DeepSets (sum aggregation) have **fundamental stabilit
   \]
 
 - Showed:
-  - These embeddings are **Bi-Lipschitz**
-  - Stability depends on **singular values of matrix A**
+  - These embeddings are **bi-Lipschitz**
+  - Stability depends on **singular values of transformation matrix A**
 
 ---
 
-### 4. 🚀 Improved Theoretical Bound (Key Contribution)
-
-Improved required embedding dimension for injectivity:
+### 4. 🚀 Improved Injectivity Bound
+Reduced required embedding dimension:
 
 | Work | Required Dimension |
 |------|------------------|
@@ -88,103 +65,94 @@ Improved required embedding dimension for injectivity:
 | Dym & Gortler | \(2nd + 1\) |
 | **This Work** | **\(D > n(d - 1)\)** |
 
-👉 This is a **significant reduction**, making models more practical
+👉 Enables **more practical and scalable representations**
 
 ---
 
-### 5. 📊 Improved Lipschitz Bounds
+### 5. 📊 Lipschitz Bounds
+Derived tighter stability bounds:
 
-Derived tighter bounds:
+- Upper bound: \(M = \sigma_1(A)\)  
+- Lower bound: \(\sigma_{d,k}(A) \le m \le \sigma_d(A)\)
 
-- Upper bound:  
-  \[
-  M = \sigma_1(A)
-  \]
-
-- Lower bound:  
-  \[
-  \sigma_{d,k}(A) \le m \le \sigma_d(A)
-  \]
-
-👉 Direct connection between **linear algebra properties** and **model stability**
+👉 Connects **linear algebra properties** to **model stability**
 
 ---
 
-## 🧪 Experimental Analysis
+## 🧪 Experimental Findings
 
-Two experiments were conducted:
-
-### 1. Stability Analysis
-- Empirical estimation of Lipschitz constants
-- Key finding:
-  - Stability improves with **embedding dimension (D)**
-  - Surprisingly stable even when theory suggests otherwise
+### Stability
+- Improves with embedding dimension (**D**)  
+- Saturates with increasing sample size (**n**)  
+- Stable even beyond theoretical guarantees  
 
 ---
 
-### 2. Classification Task
-- Synthetic permutation-invariant binary classification
-- Architecture:
-  - Sorting-based embedding + fully connected network
+### Accuracy
+- Achieves near-perfect performance for moderate **D**  
+- Sensitive to embedding dimension (**d**)  
+- Shows **stability–accuracy mismatch**
 
-### Results:
-- Accuracy:
-  - >99% for small D
-  - 100% for D > 20
-- Stability–accuracy tradeoff observed
+---
 
-![Image Alt Text](https://github.com/ravina029/Masters-Project/blob/main/Screenshot%202024-05-11%20at%2012.13.26.jpeg)
-
+### Key Observations
+- **D is the dominant factor** controlling stability and accuracy  
+- **Data efficiency:** strong performance with small datasets  
+- **Parameter sensitivity:** instability with respect to *d*  
+- Possible **overfitting or dataset simplicity** at high accuracy levels  
 
 ---
 
 ## 🔍 Key Insights
 
-- ❌ Sum-based aggregation (DeepSets-style) → **inherently unstable**
-- ✅ Sorting-based embeddings → **robust and theoretically grounded**
-- ⚠️ Theory vs practice gap:
-  - Empirical results outperform theoretical guarantees
-- 📈 Embedding dimension plays the most critical role
+- ❌ Sum-based aggregation → **inherently unstable**  
+- ✅ Sorting-based embeddings → **stable and theoretically grounded**  
+- ⚠️ Gap between **theoretical guarantees and empirical performance**  
+- 📈 Structural parameter **D** governs behavior  
+
+---
+
+## ⚠️ Limitations
+
+- Lack of statistical validation (no variance analysis)  
+- Sensitivity to embedding dimension  
+- Evaluation limited to synthetic data  
 
 ---
 
 ## 🔮 Future Directions
 
-- Further reduce embedding dimension below theoretical bounds
-- Analyze discrepancy between:
-  - **Theoretical guarantees vs empirical performance**
-- Extend framework to:
-  - Graph neural networks
-  - Real-world datasets
-- Explore applications in:
-  - **Trustworthy AI**
-  - **Robust representation learning**
+- Improve robustness across embedding configurations  
+- Analyze theory–practice discrepancy  
+- Extend to:
+  - Graph neural networks  
+  - Real-world datasets  
+- Applications in:
+  - Trustworthy AI  
+  - Robust representation learning  
 
 ---
 
 ## 🔗 Research Output
 
-- A key theorem from this thesis was included in:
-  - *Neural Injective Functions for Multisets, Measures and Graphs via a Finite Witness Theorem*
-  - arXiv: https://doi.org/10.48550/arXiv.2306.06529
+- Contributed theoretical results to:  
+  *Neural Injective Functions for Multisets, Measures and Graphs via a Finite Witness Theorem*  
+
+🔗 https://doi.org/10.48550/arXiv.2306.06529  
 
 ---
 
 ## 🧠 Research Relevance
 
-This work directly connects to modern research areas:
-
-- Trustworthy AI
-- Robust Machine Learning
-- Set / Graph Representation Learning
-- Geometric Deep Learning
+- Trustworthy AI  
+- Robust Machine Learning  
+- Set & Graph Representation Learning  
+- Geometric Deep Learning  
 
 ---
 
-## ⚡ Personal Takeaway
+## 🎯 Takeaway
 
-This thesis shaped my current research direction toward:
+This work informs my research direction toward:
 
-> Designing **stable, interpretable, and efficient representation learning methods** for real-world AI systems.
-
----
+> Designing **stable, interpretable, and reliable representation learning methods** for real-world AI systems.
